@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Greater Praise School System — Receipt Platform</title>
+<meta name="description" content="Official receipt platform of Greater Praise School System, Brewerville, Liberia. Design, preview and print the school receipt book — originals and carbon copies.">
+<link rel="icon" href="logo.png">
+<style>
+  :root{
+    --navy:#14213d;      /* matches the Receipt Sheet Builder brand */
+    --navy2:#1c3058;
+    --gold:#fca311;
+    --cream:#f6f2e9;
+    --paper:#ffffff;
+    --ink:#23303f;
+    --muted:#5d6b7c;
+    --red:#b8121b;
+    --line:#e3dccb;
+    --shadow:0 18px 44px rgba(20,33,61,.16);
+    --serif:Georgia,"Times New Roman",Times,serif;
+    --sans:"Segoe UI",system-ui,-apple-system,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:var(--sans);color:var(--ink);background:var(--cream);
+       background-image:radial-gradient(circle at 85% -10%,rgba(252,163,17,.10),transparent 42%),
+                        radial-gradient(circle at -5% 30%,rgba(184,18,27,.06),transparent 38%);
+       background-attachment:fixed;}
+  a{color:inherit}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+
+  /* ---------- top bar ---------- */
+  .topbar{position:sticky;top:0;z-index:40;background:rgba(20,33,61,.97);color:#fff;
+          box-shadow:0 2px 14px rgba(0,0,0,.18);backdrop-filter:blur(6px)}
+  .topbar .wrap{display:flex;align-items:center;gap:14px;height:64px}
+  .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:#fff}
+  .brand img{height:40px;width:auto}
+  .brand b{font-size:13.5px;letter-spacing:.4px;line-height:1.15;display:block}
+  .brand span{display:block;font-size:10px;color:#cbd5e1;font-weight:600;letter-spacing:1.6px;text-transform:uppercase}
+  .sp{flex:1}
+  .navbtn{background:var(--gold);color:#14213d;font-weight:700;text-decoration:none;border-radius:8px;
+          padding:9px 16px;font-size:13.5px;box-shadow:0 2px 0 rgba(0,0,0,.25)}
+  .navbtn:hover{background:#ffbe47}
+
+  /* ---------- hero ---------- */
+  .hero{padding:56px 0 40px}
+  .hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:44px;align-items:center}
+  .eyebrow{color:var(--red);font-weight:800;letter-spacing:2.2px;font-size:11.5px;text-transform:uppercase;margin:0 0 12px}
+  h1{font-family:var(--serif);font-size:44px;line-height:1.06;margin:0 0 14px;color:var(--navy);letter-spacing:.2px}
+  h1 em{font-style:italic;color:var(--red)}
+  .lede{font-size:17px;line-height:1.62;color:var(--muted);margin:0 0 26px;max-width:56ch}
+  .cta-row{display:flex;gap:12px;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:9px;padding:14px 24px;border-radius:10px;font-weight:700;
+       text-decoration:none;font-size:15.5px;transition:transform .08s ease,box-shadow .15s ease}
+  .btn:hover{transform:translateY(-1px)}
+  .btn.primary{background:var(--navy);color:#fff;box-shadow:0 10px 22px rgba(20,33,61,.28)}
+  .btn.primary:hover{background:var(--navy2)}
+  .btn.primary .arr{color:var(--gold)}
+  .btn.ghost{background:#fff;color:var(--navy);border:1.5px solid var(--line);box-shadow:0 4px 12px rgba(20,33,61,.07)}
+  .btn.ghost:hover{border-color:#c8bfa8}
+  .mini{font-size:12.5px;color:var(--muted);margin:14px 0 0;line-height:1.5}
+  .mini code{background:#efe9da;border-radius:5px;padding:1.5px 6px;font-size:12px;color:var(--navy)}
+
+  .shots{position:relative;min-height:330px}
+  .shot{position:absolute;border-radius:10px;box-shadow:var(--shadow);border:6px solid #fff;overflow:hidden;
+        background:#fff;transition:transform .2s ease}
+  .shot img{display:block;width:100%}
+  .shot.main{width:78%;right:4%;top:0;transform:rotate(1.4deg);z-index:2}
+  .shot.main:hover{transform:rotate(0deg) translateY(-4px)}
+  .shot.back{width:56%;left:0;top:24px;transform:rotate(-3.2deg);z-index:1;opacity:.96}
+  .shot.back:hover{transform:rotate(-1.5deg) translateY(-3px)}
+  .cap{position:absolute;left:4px;bottom:-8px;z-index:3;background:var(--navy);color:#fff;font-size:11px;
+       padding:5px 12px;border-radius:999px;font-weight:600;letter-spacing:.4px;box-shadow:0 6px 14px rgba(0,0,0,.22)}
+
+  /* ---------- stats belt ---------- */
+  .belt{background:var(--navy);color:#fff;margin:18px 0 0}
+  .belt .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;padding-top:22px;padding-bottom:22px;text-align:center}
+  .belt .num{font-family:var(--serif);font-size:30px;color:var(--gold);font-weight:700;line-height:1}
+  .belt .lbl{font-size:11.5px;letter-spacing:1.2px;text-transform:uppercase;color:#cbd5e1;margin-top:7px;font-weight:600}
+
+  /* ---------- sections ---------- */
+  section{padding:58px 0 8px}
+  .kicker{color:var(--red);font-weight:800;letter-spacing:2px;font-size:11px;text-transform:uppercase;margin:0 0 8px}
+  h2{font-family:var(--serif);font-size:30px;color:var(--navy);margin:0 0 26px;line-height:1.15}
+  h2 .thin{font-weight:400;color:var(--muted)}
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .card{background:var(--paper);border:1px solid var(--line);border-top:4px solid var(--gold);
+        border-radius:12px;padding:22px 20px;box-shadow:0 6px 18px rgba(20,33,61,.06)}
+  .card .ic{width:44px;height:44px;border-radius:10px;background:#eef1f7;display:flex;align-items:center;
+            justify-content:center;font-size:21px;margin-bottom:14px}
+  .card h3{font-family:var(--serif);font-size:17.5px;color:var(--navy);margin:0 0 8px}
+  .card p{font-size:13.8px;line-height:1.6;color:var(--muted);margin:0}
+
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;counter-reset:st}
+  .step{background:#fff;border:1px solid var(--line);border-radius:12px;padding:20px 18px;position:relative;
+        box-shadow:0 6px 16px rgba(20,33,61,.05)}
+  .step::before{counter-increment:st;content:counter(st);position:absolute;top:-13px;left:18px;background:var(--red);
+        color:#fff;font-weight:800;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;
+        justify-content:center;font-size:13px;box-shadow:0 4px 8px rgba(184,18,27,.35)}
+  .step h3{font-size:14.5px;margin:8px 0 7px;color:var(--navy)}
+  .step p{font-size:12.8px;color:var(--muted);line-height:1.55;margin:0}
+
+  .cta{padding:70px 0}
+  .cta .box{background:var(--navy);border-radius:18px;color:#fff;text-align:center;padding:46px 30px;position:relative;
+            overflow:hidden;box-shadow:var(--shadow)}
+  .cta .box:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 18% -30%,rgba(252,163,17,.22),transparent 46%),
+                   radial-gradient(circle at 85% 130%,rgba(184,18,27,.35),transparent 50%)}
+  .cta h2{color:#fff;margin:0 0 10px;position:relative}
+  .cta p{color:#cbd5e1;font-size:15px;margin:0 auto 24px;max-width:60ch;position:relative;line-height:1.6}
+  .cta .btn.primary{background:var(--gold);color:var(--navy);box-shadow:0 12px 26px rgba(0,0,0,.35);position:relative}
+  .cta .btn.primary:hover{background:#ffbe47}
+  .cta .note{font-size:12px;color:#93a1b8;margin-top:16px;position:relative}
+
+  footer{background:#0d1626;color:#9fb0c8;margin-top:30px;padding:34px 0 26px;font-size:13px;line-height:1.7}
+  footer .wrap{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:26px}
+  footer h4{color:#fff;font-size:12px;letter-spacing:1.6px;text-transform:uppercase;margin:0 0 10px}
+  footer .logo{color:#fff;font-weight:700;font-size:15px;display:block;margin-bottom:6px}
+  .chips{display:flex;gap:8px;flex-wrap:wrap}
+  .chip{background:#16233c;border:1px solid #223457;color:#cbd5e1;border-radius:7px;padding:4px 9px;font-size:11.5px;text-decoration:none}
+  .chip:hover{border-color:var(--gold);color:#fff}
+  footer .foot{margin-top:24px;border-top:1px solid #1c2b47;padding-top:16px;font-size:11.8px;color:#6d7f9c}
+
+  @media (max-width:940px){
+    .hero .wrap{grid-template-columns:1fr}
+    .shots{min-height:260px;margin-top:16px;max-width:560px}
+    .belt .wrap{grid-template-columns:repeat(2,1fr)}
+    .cards{grid-template-columns:1fr 1fr}
+    .steps{grid-template-columns:1fr 1fr;row-gap:26px}
+    footer .wrap{grid-template-columns:1fr}
+  }
+  @media (max-width:560px){
+    h1{font-size:33px}
+    .cards,.steps{grid-template-columns:1fr}
+    .topbar .sp{flex:none}
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= top bar ================= -->
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <img src="logo.png" alt="Greater Praise School System logo">
+      <span>Greater Praise School System<b>Receipt Platform</b></span>
+    </a>
+    <div class="sp"></div>
+    <a class="navbtn" href="receipts-app/index.html">Open Receipt Sheet Builder →</a>
+  </div>
+</header>
+
+<!-- ================= hero ================= -->
+<div class="hero">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">Official receipts · Brewerville, Liberia</p>
+      <h1>Your school <em>receipt book</em>, built and printed in minutes.</h1>
+      <p class="lede">One platform for the Registrar — open the Receipt Sheet Builder, set up the school
+        header, the receipt fields and the numbering, and preview every original &amp; carbon-copy sheet
+        live before you print or export the book.</p>
+      <div class="cta-row">
+        <a class="btn primary" href="receipts-app/index.html">Open the Receipt Sheet Builder <span class="arr">→</span></a>
+        <a class="btn ghost" href="receipts-app/work/export_default.pdf" target="_blank" rel="noopener">View a sample book (PDF)</a>
+      </div>
+      <p class="mini">Run the full platform with one command: <code>python3 platform_server.py</code>
+        &nbsp;·&nbsp; static hosting? Just serve <code>index.html</code> + the <code>receipts-app</code> folder.</p>
+    </div>
+    <div class="shots">
+      <div class="shot back"><img src="receipts-app/work/carbon_page.png" alt="Carbon-copy sheet preview"></div>
+      <div class="shot main"><img src="receipts-app/work/a4_sheet.png" alt="Receipt book sheet preview"></div>
+      <span class="cap">Original + carbon-copy sheets, live preview</span>
+    </div>
+  </div>
+</div>
+
+<!-- ================= stats ================= -->
+<div class="belt">
+  <div class="wrap">
+    <div><div class="num">Original + Carbon</div><div class="lbl">copies per receipt</div></div>
+    <div><div class="num">3</div><div class="lbl">slips per sheet (up to 4)</div></div>
+    <div><div class="num">Full</div><div class="lbl">cover page</div></div>
+    <div><div class="num">1 click</div><div class="lbl">print or export PDF</div></div>
+  </div>
+</div>
+
+<!-- ================= what it does ================= -->
+<section>
+  <div class="wrap">
+    <p class="kicker">Everything included</p>
+    <h2>One builder, every receipt you issue <span class="thin">— tailored to GPSS.</span></h2>
+    <div class="cards">
+      <div class="card">
+        <div class="ic">📕</div>
+        <h3>Official cover page</h3>
+        <p>A full-page or receipt-piece cover with the school name, address and the receipt-number range — every book looks official.</p>
+      </div>
+      <div class="card">
+        <div class="ic">🖨️</div>
+        <h3>Original &amp; carbon copies</h3>
+        <p>Each receipt number prints as an Original sheet plus a highlighted carbon-copy sheet, exactly like a real carbon receipt book.</p>
+      </div>
+      <div class="card">
+        <div class="ic">🔢</div>
+        <h3>Smart numbering</h3>
+        <p>Sequential across the book, with the option of triplicate mode (the same number on all three slips of a sheet).</p>
+      </div>
+      <div class="card">
+        <div class="ic">📋</div>
+        <h3>Receipt table ready to use</h3>
+        <p>Registration, semesters, uniform, WAEC, field trip, total and balance — edit the rows and columns to match your fee list.</p>
+      </div>
+      <div class="card">
+        <div class="ic">✂️</div>
+        <h3>Cut lines &amp; print-ready</h3>
+        <p>Dashed or solid cut guides between slips and under each sheet, sized for US-Letter or A4 landscape paper.</p>
+      </div>
+      <div class="card">
+        <div class="ic">💾</div>
+        <h3>Settings remembered</h3>
+        <p>Your school details and customizations are saved in the browser, so next time the book opens exactly as you left it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= how it works ================= -->
+<section>
+  <div class="wrap">
+    <p class="kicker">How it works</p>
+    <h2>From blank book to printed receipts <span class="thin">in four steps</span></h2>
+    <div class="steps">
+      <div class="step">
+        <h3>Open the builder</h3>
+        <p>Click “Open the Receipt Sheet Builder” — no account, no installation.</p>
+      </div>
+      <div class="step">
+        <h3>Customize</h3>
+        <p>School header, info fields, numbering start, paper size, colors and cover.</p>
+      </div>
+      <div class="step">
+        <h3>Preview every sheet</h3>
+        <p>All pages render live — flip through originals and carbon copies before printing.</p>
+      </div>
+      <div class="step">
+        <h3>Print or export</h3>
+        <p>Hit <b>Export PDF</b> for a file, or <b>Print</b> straight onto your receipt paper.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= cta ================= -->
+<div class="cta">
+  <div class="wrap">
+    <div class="box">
+      <h2>Ready to build the next receipt book?</h2>
+      <p>Set up the new term’s book in under a minute — receipts 0001, 0002, 0003 … all numbered,
+        all with carbon copies, ready for the Registrar.</p>
+      <a class="btn primary" href="receipts-app/index.html">Launch the Receipt Sheet Builder →</a>
+      <p class="note">Runs entirely in your browser. PDF export needs the small server (<code>platform_server.py</code>);
+        otherwise use the Print button — every sheet is already laid out for your paper.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ================= footer ================= -->
+<footer>
+  <div class="wrap">
+    <div>
+      <span class="logo">Greater Praise School System</span>
+      Cow Farm, New Israel Community,<br>Brewerville City, Liberia<br>
+      Phone: 0775508030 / 0771241726
+    </div>
+    <div>
+      <h4>Platform files</h4>
+      <div class="chips">
+        <a class="chip" href="index.html">index.html (this home)</a>
+        <a class="chip" href="receipts-app/index.html">Receipt Sheet Builder</a>
+        <a class="chip" href="receipts-app/work/export_default.pdf">Sample default book</a>
+        <a class="chip" href="receipts-app/work/export_slipcover.pdf">Sample slip-cover book</a>
+      </div>
+    </div>
+    <div>
+      <h4>Notes</h4>
+      For a printable file that exactly matches the on-screen sheets, use <b>Export PDF</b>
+      (needs <code>python3 platform_server.py</code>) or the browser <b>Print</b> dialog with
+      margins set to none.
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="foot">© <span id="yr"></span> Greater Praise School System · Receipt Platform · Built for Brewerville, Liberia</div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
