@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Greater Praise School System — Receipts</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header id="toolbar" class="toolbar">
+    <div class="brand">Receipt Sheet Builder</div>
+    <div class="actions">
+      <button id="toggleEditor" type="button">Hide editor</button>
+      <button id="resetBtn" type="button">Reset defaults</button>
+      <button id="exportBtn" type="button">Export PDF</button>
+      <a id="openPdf" href="export.pdf" target="_blank" rel="noopener">Open PDF</a>
+      <button id="printBtn" type="button">Print</button>
+    </div>
+  </header>
+
+  <div id="app">
+    <aside id="editor" aria-label="Receipt editor">
+      <section>
+        <h2>Cover page</h2>
+        <label class="check"><input id="coverEnabled" type="checkbox"> Include cover page</label>
+        <label class="stack">Cover template
+          <select id="coverTemplate">
+            <option value="full">Full page</option>
+            <option value="slip">Receipt piece (like 001)</option>
+          </select>
+        </label>
+        <label class="stack">Cover title
+          <input id="coverTitle" type="text">
+        </label>
+        <div class="listhead">Cover subtitle lines</div>
+        <div class="list" id="coverLinesList"></div>
+        <button class="add" type="button" data-add="coverLines">+ Add line</button>
+        <label class="check"><input id="coverShowRange" type="checkbox"> Show receipt-number range</label>
+        <label class="stack">Range label
+          <input id="coverRangeLabel" type="text">
+        </label>
+        <div class="listhead">Cover fill-in fields</div>
+        <div class="list" id="coverFieldsList"></div>
+        <button class="add" type="button" data-add="coverFields">+ Add field</button>
+      </section>
+
+      <section>
+        <h2>Header</h2>
+        <label class="stack">School name
+          <input id="schoolName" type="text">
+        </label>
+        <div class="listhead">Address lines</div>
+        <div class="list" id="addressList"></div>
+        <button class="add" type="button" data-add="address">+ Add address line</button>
+      </section>
+
+      <section>
+        <h2>Info fields</h2>
+        <div class="list" id="fieldList"></div>
+        <button class="add" type="button" data-add="fields">+ Add field</button>
+      </section>
+
+      <section>
+        <h2>Receipt numbering</h2>
+        <label class="stack">Numbering style
+          <select id="numberMode">
+            <option value="copy">Original + carbon copy (sheet pairs: 1,2,3 then 1,2,3)</option>
+            <option value="triplicate">Same number on every slip of a sheet</option>
+          </select>
+        </label>
+        <div class="grid2">
+          <label class="stack">First number
+            <input id="numberStart" type="number" min="0" max="999999">
+          </label>
+          <label class="stack">Digits
+            <input id="numberDigits" type="number" min="1" max="8">
+          </label>
+          <label class="stack">Sheets
+            <input id="sheetCount" type="number" min="1" max="200">
+          </label>
+          <label class="stack">Slips per sheet
+            <input id="slipsPerSheet" type="number" min="1" max="4">
+          </label>
+        </div>
+        <label class="stack">Number color
+          <input id="numberColor" type="color">
+        </label>
+        <label class="check"><input id="carbonEnabled" type="checkbox"> Highlight carbon copies</label>
+        <label class="stack">Carbon highlight color
+          <input id="carbonColor" type="color">
+        </label>
+      </section>
+
+      <section>
+        <h2>Cut lines</h2>
+        <label class="check"><input id="cutEnabled" type="checkbox"> Show cut lines</label>
+        <label class="stack">Line style
+          <select id="cutStyle">
+            <option value="dashed">Dashed</option>
+            <option value="dotted">Dotted</option>
+            <option value="solid">Solid</option>
+            <option value="dashdot">Dash-dot</option>
+          </select>
+        </label>
+        <div class="grid2">
+          <label class="stack">Color
+            <input id="cutColor" type="color">
+          </label>
+          <label class="stack">Thickness (px)
+            <input id="cutWidth" type="number" min="1" max="4">
+          </label>
+        </div>
+        <label class="check"><input id="cutVertical" type="checkbox"> Vertical cuts between slips</label>
+        <label class="check"><input id="cutOuter" type="checkbox"> Outer trim edges</label>
+        <label class="check"><input id="cutHorizontal" type="checkbox"> Bottom cut line under receipts</label>
+        <label class="stack">Bottom cut position (<span id="cutPosVal">7.6</span> in from top)
+          <input id="cutPos" type="range" min="0.5" max="8.4" step="0.05">
+        </label>
+      </section>
+
+      <section>
+        <h2>Table</h2>
+        <div class="listhead">Column titles</div>
+        <div class="list" id="columnList"></div>
+        <div class="listhead">Row descriptions</div>
+        <div class="list" id="rowList"></div>
+        <button class="add" type="button" data-add="rows">+ Add row</button>
+      </section>
+
+      <section>
+        <h2>Footer</h2>
+        <label class="stack">Signature label
+          <input id="signedLabel" type="text">
+        </label>
+        <label class="stack">Role under signature
+          <input id="roleLabel" type="text">
+        </label>
+      </section>
+
+      <section>
+        <h2>Appearance</h2>
+        <label class="stack">Paper size
+          <select id="paperSize">
+            <option value="letter">Letter (11 × 8.5 in)</option>
+            <option value="a4">A4 (297 × 210 mm)</option>
+          </select>
+        </label>
+        <label class="stack">Font
+          <select id="fontFamily">
+            <option value='"Times New Roman", Times, serif'>Times (classic)</option>
+            <option value='Georgia, serif'>Georgia</option>
+            <option value='Arial, Helvetica, sans-serif'>Arial</option>
+            <option value='"Courier New", monospace'>Courier</option>
+          </select>
+        </label>
+        <label class="stack">Ink color
+          <input id="inkColor" type="color">
+        </label>
+      </section>
+    </aside>
+
+    <main id="preview">
+      <div id="sheets"></div>
+    </main>
+  </div>
+
+  <template id="sheetTpl">
+    <section class="sheet"></section>
+  </template>
+
+  <template id="itemTpl">
+    <div class="item">
+      <input type="text">
+      <button class="del" type="button" title="Remove">&times;</button>
+    </div>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
