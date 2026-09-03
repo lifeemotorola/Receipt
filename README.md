@@ -1,7 +1,7 @@
-# Greater Praise School System — Receipt Platform
+# Suahco4 — Receipt Platform
 
-Design, preview and print the official school receipt book — originals and
-carbon copies — for **Greater Praise School System, Brewerville, Liberia**.
+Design, preview and print the official receipt book — originals and
+carbon copies — for **Suahco4, Brewerville, Liberia**.
 
 ## Run the whole platform
 
@@ -21,6 +21,8 @@ No server is required for everyday use. Host (or just open) the repo and use:
 | --- | --- |
 | `index.html` | Platform home page — start here |
 | `receipts-app/index.html` | The Receipt Sheet Builder (covers, original/carbon sheets, numbering) |
+| `receipt_book.html` | The Receipt Book Generator (all four templates, fully editable) |
+| `receipt_book*.pdf` / `receipt_book*.docx` | The four receipt-book templates |
 | `receipts-app/work/export_default.pdf` | Sample book produced by the builder (default settings) |
 | `receipts-app/work/export_slipcover.pdf` | Sample book with a receipt-piece cover |
 

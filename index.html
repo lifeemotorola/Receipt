@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Greater Praise School System — Receipt Platform</title>
-<meta name="description" content="Official receipt platform of Greater Praise School System, Brewerville, Liberia. Design, preview and print the school receipt book — originals and carbon copies.">
+<title>Suahco4 — Receipt Platform</title>
+<meta name="description" content="Official receipt platform of Suahco4, Brewerville, Liberia. Design, preview and print the receipt book — originals and carbon copies.">
 <link rel="icon" href="logo.png">
 <style>
   :root{
@@ -101,6 +101,28 @@
   .step h3{font-size:14.5px;margin:8px 0 7px;color:var(--navy)}
   .step p{font-size:12.8px;color:var(--muted);line-height:1.55;margin:0}
 
+  /* ---------- templates gallery ---------- */
+  .tpl-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .tpl-card{background:var(--paper);border:1px solid var(--line);border-radius:12px;overflow:hidden;
+            box-shadow:0 6px 18px rgba(20,33,61,.06);display:flex;flex-direction:column}
+  .tpl-card .thumb{display:block;width:100%;height:150px;object-fit:contain;object-position:center;
+            background:#f6f3ea;border-bottom:1px solid var(--line);padding:8px}
+  .tpl-card .body{padding:15px 18px 18px;display:flex;flex-direction:column;gap:8px;flex:1}
+  .tpl-card h3{font-family:var(--serif);font-size:16.5px;color:var(--navy);margin:0}
+  .tpl-card p{font-size:13px;line-height:1.55;color:var(--muted);margin:0}
+  .tpl-card .links{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto;padding-top:12px}
+  .tpl-card .lnk{font-size:12.5px;font-weight:700;text-decoration:none;border-radius:7px;padding:7px 11px;
+                 background:#eef1f7;color:var(--navy)}
+  .tpl-card .lnk:hover{background:#e2e8f0}
+  .tpl-card .lnk.primary{background:var(--navy);color:#fff}
+  .tpl-card .lnk.primary:hover{background:var(--navy2)}
+  .tpl-gen{background:var(--paper);border:1px solid var(--line);border-top:4px solid var(--gold);border-radius:12px;
+           padding:22px 24px;display:flex;align-items:center;justify-content:space-between;gap:22px;
+           box-shadow:0 6px 18px rgba(20,33,61,.06);margin-top:20px}
+  .tpl-gen h3{font-family:var(--serif);font-size:18px;color:var(--navy);margin:0 0 8px}
+  .tpl-gen p{font-size:13.8px;line-height:1.6;color:var(--muted);margin:0;max-width:68ch}
+  .tpl-gen .btn{flex:none}
+
   .cta{padding:70px 0}
   .cta .box{background:var(--navy);border-radius:18px;color:#fff;text-align:center;padding:46px 30px;position:relative;
             overflow:hidden;box-shadow:var(--shadow)}
@@ -127,11 +149,13 @@
     .belt .wrap{grid-template-columns:repeat(2,1fr)}
     .cards{grid-template-columns:1fr 1fr}
     .steps{grid-template-columns:1fr 1fr;row-gap:26px}
+    .tpl-grid{grid-template-columns:1fr 1fr}
+    .tpl-gen{flex-direction:column;align-items:flex-start}
     footer .wrap{grid-template-columns:1fr}
   }
   @media (max-width:560px){
     h1{font-size:33px}
-    .cards,.steps{grid-template-columns:1fr}
+    .cards,.steps,.tpl-grid{grid-template-columns:1fr}
     .topbar .sp{flex:none}
   }
 </style>
@@ -142,8 +166,8 @@
 <header class="topbar">
   <div class="wrap">
     <a class="brand" href="index.html">
-      <img src="logo.png" alt="Greater Praise School System logo">
-      <span>Greater Praise School System<b>Receipt Platform</b></span>
+      <img src="logo.png" alt="Suahco4 logo">
+      <span>Suahco4<b>Receipt Platform</b></span>
     </a>
     <div class="sp"></div>
     <a class="navbtn" href="receipts-app/index.html">Open Receipt Sheet Builder →</a>
@@ -188,35 +212,35 @@
 <section>
   <div class="wrap">
     <p class="kicker">Everything included</p>
-    <h2>One builder, every receipt you issue <span class="thin">— tailored to GPSS.</span></h2>
+    <h2>One builder, every receipt you issue <span class="thin">— tailored to Suahco4.</span></h2>
     <div class="cards">
       <div class="card">
-        <div class="ic">📕</div>
+        <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#14213d" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
         <h3>Official cover page</h3>
         <p>A full-page or receipt-piece cover with the school name, address and the receipt-number range — every book looks official.</p>
       </div>
       <div class="card">
-        <div class="ic">🖨️</div>
+        <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#14213d" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V3h12v6"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7"/></svg></div>
         <h3>Original &amp; carbon copies</h3>
         <p>Each receipt number prints as an Original sheet plus a highlighted carbon-copy sheet, exactly like a real carbon receipt book.</p>
       </div>
       <div class="card">
-        <div class="ic">🔢</div>
+        <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#14213d" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/></svg></div>
         <h3>Smart numbering</h3>
         <p>Sequential across the book, with the option of triplicate mode (the same number on all three slips of a sheet).</p>
       </div>
       <div class="card">
-        <div class="ic">📋</div>
+        <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#14213d" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="12" y2="17"/></svg></div>
         <h3>Receipt table ready to use</h3>
         <p>Registration, semesters, uniform, WAEC, field trip, total and balance — edit the rows and columns to match your fee list.</p>
       </div>
       <div class="card">
-        <div class="ic">✂️</div>
+        <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#14213d" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg></div>
         <h3>Cut lines &amp; print-ready</h3>
         <p>Dashed or solid cut guides between slips and under each sheet, sized for US-Letter or A4 landscape paper.</p>
       </div>
       <div class="card">
-        <div class="ic">💾</div>
+        <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#14213d" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5z"/><path d="M16 3v5h5"/><polyline points="9 15 12 18 15 15"/><line x1="12" y1="18" x2="12" y2="11"/></svg></div>
         <h3>Settings remembered</h3>
         <p>Your school details and customizations are saved in the browser, so next time the book opens exactly as you left it.</p>
       </div>
@@ -250,6 +274,74 @@
   </div>
 </section>
 
+<!-- ================= templates ================= -->
+<section id="templates">
+  <div class="wrap">
+    <p class="kicker">Receipt templates</p>
+    <h2>All four receipt books, in one place <span class="thin">— open, print or edit any of them.</span></h2>
+    <div class="tpl-grid">
+      <div class="tpl-card">
+        <img class="thumb" src="previews/template-simple.png" alt="Simple receipt template preview" loading="lazy">
+        <div class="body">
+          <h3>Simple receipt</h3>
+          <p>Blank-line receipt with original + carbon copy — the classic book, exactly as designed.</p>
+          <div class="links">
+            <a class="lnk primary" href="receipt_book.pdf" target="_blank" rel="noopener">PDF</a>
+            <a class="lnk" href="receipt_book.docx">Word</a>
+          </div>
+        </div>
+      </div>
+      <div class="tpl-card">
+        <img class="thumb" src="previews/template-itemized.png" alt="Itemized sales receipt template preview" loading="lazy">
+        <div class="body">
+          <h3>Itemized receipt</h3>
+          <p>Item table with quantity, rate and amount plus sub-total, discount and total rows.</p>
+          <div class="links">
+            <a class="lnk primary" href="receipt_book_itemized.pdf" target="_blank" rel="noopener">PDF</a>
+            <a class="lnk" href="receipt_book_itemized.docx">Word</a>
+          </div>
+        </div>
+      </div>
+      <div class="tpl-card">
+        <img class="thumb" src="previews/template-fees.png" alt="School fees payment slip template preview" loading="lazy">
+        <div class="body">
+          <h3>School fees slip</h3>
+          <p>Fee breakdown — particulars, amount due, amount paid and balance, with a total band.</p>
+          <div class="links">
+            <a class="lnk primary" href="receipt_book_fees.pdf" target="_blank" rel="noopener">PDF</a>
+            <a class="lnk" href="receipt_book_fees.docx">Word</a>
+          </div>
+        </div>
+      </div>
+      <div class="tpl-card">
+        <img class="thumb" src="previews/template-wide.png" alt="Horizontal payment receipt template preview" loading="lazy">
+        <div class="body">
+          <h3>Horizontal receipt</h3>
+          <p>Landscape payment receipt with the name on the left and title + number on the right.</p>
+          <div class="links">
+            <a class="lnk primary" href="receipt_book_wide.pdf" target="_blank" rel="noopener">PDF</a>
+            <a class="lnk" href="receipt_book_wide.docx">Word</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tpl-gen">
+      <div>
+        <h3>Want to change a template? Open the Receipt Book Generator</h3>
+        <p>One editor with all four templates built in — switch between simple, itemized, school-fees and
+          horizontal, then edit the header, fields, numbering, colours and copies. Export to PDF or print
+          straight from the browser.</p>
+      </div>
+      <a class="btn primary" href="receipt_book.html">Open the Receipt Book Generator <span class="arr">→</span></a>
+    </div>
+
+    <p class="mini" style="margin-top:18px">All four books combined in a single file:
+      <a class="chip" href="receipts_all_in_one.pdf" target="_blank" rel="noopener">receipts_all_in_one.pdf</a>
+      &nbsp;·&nbsp; <a class="chip" href="receipts_all_in_one.docx">receipts_all_in_one.docx</a></p>
+  </div>
+</section>
+
 <!-- ================= cta ================= -->
 <div class="cta">
   <div class="wrap">
@@ -268,17 +360,19 @@
 <footer>
   <div class="wrap">
     <div>
-      <span class="logo">Greater Praise School System</span>
+      <span class="logo">Suahco4</span>
       Cow Farm, New Israel Community,<br>Brewerville City, Liberia<br>
-      Phone: 0775508030 / 0771241726
+      Phone: 0778662590
     </div>
     <div>
       <h4>Platform files</h4>
       <div class="chips">
         <a class="chip" href="index.html">index.html (this home)</a>
         <a class="chip" href="receipts-app/index.html">Receipt Sheet Builder</a>
-        <a class="chip" href="receipts-app/work/export_default.pdf">Sample default book</a>
-        <a class="chip" href="receipts-app/work/export_slipcover.pdf">Sample slip-cover book</a>
+        <a class="chip" href="receipt_book.html">Receipt Book Generator</a>
+        <a class="chip" href="receipts_all_in_one.pdf" target="_blank" rel="noopener">All books in one PDF</a>
+        <a class="chip" href="receipts-app/work/export_default.pdf" target="_blank" rel="noopener">Sample default book</a>
+        <a class="chip" href="receipts-app/work/export_slipcover.pdf" target="_blank" rel="noopener">Sample slip-cover book</a>
       </div>
     </div>
     <div>
@@ -289,7 +383,7 @@
     </div>
   </div>
   <div class="wrap">
-    <div class="foot">© <span id="yr"></span> Greater Praise School System · Receipt Platform · Built for Brewerville, Liberia</div>
+    <div class="foot">© <span id="yr"></span> Suahco4 · Receipt Platform · Built for Brewerville, Liberia</div>
   </div>
 </footer>
 

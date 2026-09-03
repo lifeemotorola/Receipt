@@ -24,7 +24,7 @@ JSDOM.fromURL(URL, { runScripts: 'dangerously', resources: 'usable', pretendToBe
     if (!allSheets[0].classList.contains('cover-sheet')) fail('cover page must be first');
     const cover = allSheets[0];
     if (cover.querySelector('.cov-title').textContent !== 'OFFICIAL RECEIPT BOOK') fail('cover title');
-    if (cover.querySelector('.cov-school').textContent !== 'GREATER PRAISE SCHOOL SYSTEM') fail('cover school');
+    if (cover.querySelector('.cov-school').textContent !== 'Suahco4') fail('cover school');
     const range = cover.querySelector('.cov-range').textContent;
     if (range !== 'Receipt Nos. 0001 to 0015') fail(`cover range: "${range}"`);
     if (cover.querySelectorAll('.cov-fields .field').length !== 3) fail('cover fields');
