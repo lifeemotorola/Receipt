@@ -103,7 +103,7 @@ HTML = r'''<!DOCTYPE html>
 </head>
 <body>
 <header class="app">
-  <h1>&#128220; Receipt Book Generator</h1>
+  <h1><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:6px" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg>Receipt Book Generator</h1>
   <span class="sp"></span>
   <button class="btn sm" id="btnSave">Save settings</button>
   <button class="btn sm" id="btnLoad">Load</button>
@@ -115,7 +115,7 @@ HTML = r'''<!DOCTYPE html>
   <div class="panel" id="panel">
     <h2>Customize everything</h2>
 
-    <details open><summary>&#129513; Template</summary><div class="body">
+    <details open><summary><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:6px" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg> Template</summary><div class="body">
       <label class="f">Receipt template</label>
       <select id="template">
         <option value="simple">1 &mdash; Blank lines (your original book)</option>
@@ -128,7 +128,7 @@ HTML = r'''<!DOCTYPE html>
       <button class="btn sm" id="btnReload">Reload this template&rsquo;s defaults</button>
     </div></details>
 
-    <details open><summary>&#127970; Business header</summary><div class="body">
+    <details open><summary><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:6px" aria-hidden="true"><path d="M3 21h18"/><path d="M5 21V5a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v16"/><path d="M15 9h4a1 1 0 0 1 1 1v11"/><line x1="8" y1="7" x2="8" y2="7"/><line x1="11" y1="7" x2="11" y2="7"/><line x1="8" y1="11" x2="8" y2="11"/><line x1="11" y1="11" x2="11" y2="11"/></svg> Business header</summary><div class="body">
       <label class="f">Business / school name</label>
       <input type="text" id="biz">
       <label class="f">Address line</label>
@@ -152,7 +152,7 @@ HTML = r'''<!DOCTYPE html>
       <button class="btn sm" id="btnNoLogo" style="margin-top:4px">Remove logo image</button>
     </div></details>
 
-    <details open><summary>&#128290; Numbering</summary><div class="body">
+    <details open><summary><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:6px" aria-hidden="true"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/></svg> Numbering</summary><div class="body">
       <div class="row">
         <div><label class="f">Prefix</label><input type="text" id="prefix"></div>
         <div><label class="f">Suffix</label><input type="text" id="suffix"></div>
@@ -173,7 +173,7 @@ HTML = r'''<!DOCTYPE html>
       <p class="hint">Numbering runs across the book; the carbon copy always repeats its original's number.</p>
     </div></details>
 
-    <details open><summary>&#128203; Fields on the receipt</summary><div class="body">
+    <details open><summary><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:6px" aria-hidden="true"><path d="M9 5H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-4"/><rect x="9" y="3" width="6" height="4" rx="1"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="15" y2="16"/></svg> Fields on the receipt</summary><div class="body">
       <div id="fieldList"></div>
       <div class="row" style="margin-top:8px">
         <button class="btn sm" id="addLine">+ Line field</button>
@@ -183,7 +183,7 @@ HTML = r'''<!DOCTYPE html>
       <b>Pair</b> puts a field side-by-side with the next one. <b>Ruled</b> adds extra blank writing lines.</p>
     </div></details>
 
-    <details open id="secTable" style="display:none"><summary>&#128202; The table</summary><div class="body">
+    <details open id="secTable" style="display:none"><summary><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:6px" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="9" y1="10" x2="9" y2="20"/></svg> The table</summary><div class="body">
       <label class="f">Columns &mdash; one per line: <code>Heading | width | l/c/r</code></label>
       <textarea id="tblCols" style="min-height:90px"></textarea>
       <label class="f">Row labels &mdash; one per line (leave empty for numbered blank rows)</label>
@@ -201,7 +201,7 @@ HTML = r'''<!DOCTYPE html>
       <div class="chk"><input type="checkbox" id="totalsRight"><label for="totalsRight">Totals only under the last columns</label></div>
     </div></details>
 
-    <details id="secBelow" style="display:none"><summary>&#11015; Fields below the table</summary><div class="body">
+    <details id="secBelow" style="display:none"><summary><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:6px" aria-hidden="true"><line x1="12" y1="3" x2="12" y2="21"/><polyline points="6 15 12 21 18 15"/></svg> Fields below the table</summary><div class="body">
       <div id="fieldList2"></div>
       <div class="row" style="margin-top:8px">
         <button class="btn sm" id="addLine2">+ Line field</button>
@@ -209,7 +209,7 @@ HTML = r'''<!DOCTYPE html>
       </div>
     </div></details>
 
-    <details><summary>&#9997; Footer</summary><div class="body">
+    <details><summary><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:6px" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg> Footer</summary><div class="body">
       <label class="f">Signature caption(s) &mdash; comma-separated for two or three lines</label>
       <input type="text" id="sigCap">
       <label class="f">Footer note (left of signature)</label>
@@ -217,7 +217,7 @@ HTML = r'''<!DOCTYPE html>
       <div class="chk"><input type="checkbox" id="showSig"><label for="showSig">Show signature line</label></div>
     </div></details>
 
-    <details open><summary>&#128209; Copies &amp; paper</summary><div class="body">
+    <details open><summary><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:6px" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copies &amp; paper</summary><div class="body">
       <label class="f">Copies per receipt number</label>
       <select id="copies">
         <option value="1">1 — original only</option>
@@ -242,7 +242,7 @@ HTML = r'''<!DOCTYPE html>
       </select>
     </div></details>
 
-    <details open><summary>&#128196; Page layout</summary><div class="body">
+    <details open><summary><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:6px" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg> Page layout</summary><div class="body">
       <label class="f">Page size</label>
       <select id="page">
         <option value="210x297">A4 portrait — 210 x 297 mm</option>
@@ -281,7 +281,7 @@ HTML = r'''<!DOCTYPE html>
       </div>
     </div></details>
 
-    <details><summary>&#127912; Type &amp; colour</summary><div class="body">
+    <details><summary><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:6px" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="8.5" cy="9.5" r="1"/><circle cx="12" cy="7.5" r="1"/><circle cx="15.5" cy="9.5" r="1"/></svg> Type &amp; colour</summary><div class="body">
       <label class="f">Font family</label>
       <select id="font">
         <option value="Arial,Helvetica,sans-serif">Arial / Helvetica</option>
@@ -309,7 +309,7 @@ HTML = r'''<!DOCTYPE html>
       </div>
     </div></details>
 
-    <details><summary>&#128221; Pre-fill values (optional)</summary><div class="body">
+    <details><summary><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-right:6px" aria-hidden="true"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M15 3l6 6-9 9-4 1 1-4z"/></svg> Pre-fill values (optional)</summary><div class="body">
       <p class="hint">Type a value to print it on every receipt instead of a blank line. Leave empty for handwriting.</p>
       <div id="prefillList"></div>
     </div></details>
@@ -332,13 +332,13 @@ HTML = r'''<!DOCTYPE html>
 const DEFAULT_LOGO = "__LOGO__";
 
 const DEFAULTS = {
-  biz:"GREATER PRAISE SCHOOL SYSTEM",
+  biz:"Suahco4",
   addr:"COW FARM, NEW ISRAEL COMMUNITY, BREWERVILLE -LIBERIA",
-  contact:"Phone: 0775508030/0771241726 | Email:",
+  contact:"Phone: 0778662590 | Email:",
   extra:"",
   title:"RECEIPT",
   logo: DEFAULT_LOGO, showLogo:true, logoW:14,
-  prefix:"GPSS-", suffix:"", start:1, pad:3, count:50, step:1,
+  prefix:"SUAHCO4-", suffix:"", start:1, pad:3, count:50, step:1,
   noLabel:"Receipt No:", showSeq:true, seqTpl:"[Receipt #{n}]",
   fields:[
     {t:"line", label:"Date:",           pair:true,  ruled:0, val:""},
@@ -466,7 +466,7 @@ function syncSections(){
   $("secTable").style.display = t ? "" : "none";
   $("secBelow").style.display = t ? "" : "none";
   document.querySelector("#fieldList").closest("details").querySelector("summary").innerHTML =
-    t ? "\u2b06 Fields above the table" : "\ud83d\udccb Fields on the receipt";
+    t ? "Fields above the table" : "Fields on the receipt";
 }
 function push(){
   SIMPLE.forEach(k=>{ const e=$(k); if(e) e.value = S[k]; });

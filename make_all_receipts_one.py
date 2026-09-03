@@ -37,19 +37,19 @@ PARTS = [
     dict(kind='pdf', file='receipt_book.pdf', title='Simple Receipt Book',
          src='receipt_book.pdf + receipt_book.docx',
          desc='Blank-line receipt, 2 slips per A4 page - Original + Carbon Copy.',
-         nums='Receipt No. GPSS-061 - GPSS-110 (50 receipts x 2 copies)'),
+         nums='Receipt No. SUAHCO4-061 - SUAHCO4-110 (50 receipts x 2 copies)'),
     dict(kind='pdf', file='receipt_book_itemized.pdf', title='Sales Receipt Book (Itemized)',
          src='receipt_book_itemized.pdf + receipt_book_itemized.docx',
          desc='Itemized table (Qty / Rate / Amount) with sub-total, discount, total.',
-         nums='Receipt No. GPSS-061 - GPSS-110 (50 receipts x 2 copies)'),
+         nums='Receipt No. SUAHCO4-061 - SUAHCO4-110 (50 receipts x 2 copies)'),
     dict(kind='pdf', file='receipt_book_fees.pdf', title='School Fees Payment Slip Book',
          src='receipt_book_fees.pdf + receipt_book_fees.docx',
          desc='Fee breakdown: particulars / amount due / amount paid / balance.',
-         nums='Receipt No. GPSS-061 - GPSS-110 (50 receipts x 2 copies)'),
+         nums='Receipt No. SUAHCO4-061 - SUAHCO4-110 (50 receipts x 2 copies)'),
     dict(kind='pdf', file='receipt_book_wide.pdf', title='Payment Receipt Book (Horizontal)',
          src='receipt_book_wide.pdf + receipt_book_wide.docx',
          desc='Horizontal A4-landscape receipt, 2 slips per page.',
-         nums='Receipt No. GPSS-061 - GPSS-110 (50 receipts x 2 copies)'),
+         nums='Receipt No. SUAHCO4-061 - SUAHCO4-110 (50 receipts x 2 copies)'),
     dict(kind='pdf', file='uploads/jkpp.pdf', title='Uploaded Receipt Book - Original Scan/PDF',
          src='uploads/jkpp.pdf',
          desc='The scanned book exactly as it was uploaded (letter size).',
@@ -104,7 +104,7 @@ def make_cover_pdf(pdf_w, pdf_h, toc, total_pages):
     y -= 9 * mm
     c.setFont('Helvetica', 10.5)
     c.setFillColor(MUTED)
-    c.drawCentredString(W / 2, y, 'Greater Praise School System - each receipt book kept exactly as designed')
+    c.drawCentredString(W / 2, y, 'Suahco4 - each receipt book kept exactly as designed')
     y -= 18 * mm
 
     c.setFont('Helvetica-Bold', 13)
@@ -298,8 +298,8 @@ def build_pdf():
 
     try:
         final.add_metadata({
-            '/Title': 'All Receipts - One File (Greater Praise School System)',
-            '/Author': 'Greater Praise School System',
+            '/Title': 'All Receipts - One File (Suahco4)',
+            '/Author': 'Suahco4',
             '/Subject': 'Combined receipt book: every receipt document in one PDF',
             '/Creator': 'make_all_receipts_one.py',
         })
@@ -382,8 +382,8 @@ def build_docx():
                 final_sect = body.find(qn('w:sectPr'))
 
     core = doc.core_properties
-    core.title = 'All Receipts - One File (Greater Praise School System)'
-    core.author = 'Greater Praise School System'
+    core.title = 'All Receipts - One File (Suahco4)'
+    core.author = 'Suahco4'
     core.comments = 'Simple, itemized, school-fees and horizontal receipt books combined; each book keeps its own page setup as a Word section.'
     doc.save(OUT_DOCX)
     return OUT_DOCX

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Greater Praise School System — Receipt Book builder.
+Suahco4 — Receipt Book builder.
 
 Produces:
   receipt_book.pdf   — print-ready, 2 receipts per A4 page (Original + Carbon Copy)
@@ -12,16 +12,16 @@ Edit the CONFIG block below to customise anything, then run:  python3 build_rece
 # ============================== CONFIG ==============================
 CONFIG = {
     # --- header ---
-    "biz":      "GREATER PRAISE SCHOOL SYSTEM",
+    "biz":      "Suahco4",
     "addr":     "COW FARM, NEW ISRAEL COMMUNITY, BREWERVILLE -LIBERIA",
-    "contact":  "Phone: 0775508030/0771241726 | Email:",
+    "contact":  "Phone: 0778662590 | Email:",
     "extra":    "",
     "title":    "RECEIPT",
     "logo":     "logo.png",        # path, or "" for no logo
     "logo_w_mm": 14,
 
     # --- numbering ---
-    "prefix":   "GPSS-",
+    "prefix":   "SUAHCO4-",
     "suffix":   "",
     "start":    61,
     "pad":      3,

@@ -13,8 +13,8 @@
     coverShowRange: true,
     coverRangeLabel: 'Receipt Nos.',
     coverFields: ['Academic Year:', 'Issued to:', 'Registrar:'],
-    schoolName: 'GREATER PRAISE SCHOOL SYSTEM',
-    address: ['New Israel Community', 'Brewerville City'],
+    schoolName: 'Suahco4',
+    address: ['New Israel Community', 'Brewerville City', 'Phone: 0778662590'],
     fields: ['Name:', 'Grade:', 'Date:', 'Amount in words:'],
     numberMode: 'copy',          /* 'copy' = original + carbon copy sheet pairs; 'triplicate' */
     carbon: { enabled: true, color: '#d9e6ff' },
