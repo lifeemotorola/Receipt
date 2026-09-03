@@ -21,7 +21,8 @@ No server is required for everyday use. Host (or just open) the repo and use:
 | --- | --- |
 | `index.html` | Platform home page — start here |
 | `receipts-app/index.html` | The Receipt Sheet Builder (covers, original/carbon sheets, numbering) |
-| `receipt_book.html` | The Receipt Book Generator (all four templates, fully editable) |
+| `index.html?template=simple` (or `itemized`, `fees`, `wide`) | Opens that template in the embedded Receipt Book Generator |
+| `receipt_book.html` | Redirects to the generator in `index.html` (kept so old links still work) |
 | `receipt_book*.pdf` / `receipt_book*.docx` | The four receipt-book templates |
 | `receipts-app/work/export_default.pdf` | Sample book produced by the builder (default settings) |
 | `receipts-app/work/export_slipcover.pdf` | Sample book with a receipt-piece cover |

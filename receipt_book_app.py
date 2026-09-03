@@ -1,4 +1,8 @@
-"""Builds receipt_book.html — a self-contained receipt-book generator."""
+"""Builds receipt_book.html — a self-contained receipt-book generator.
+
+NOTE: the generator now lives inside index.html (open it with index.html?builder=1 or
+index.html?template=simple|itemized|fees|wide), and receipt_book.html is a redirect to it.
+Re-running this script would overwrite that redirect — update index.html instead."""
 import base64, json, io
 from PIL import Image
 

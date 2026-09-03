@@ -29,6 +29,7 @@ DEFAULTS = {
     'fields': ['Name:', 'Grade:', 'Date:', 'Amount in words:'],
     'numberMode': 'copy',
     'carbon': {'enabled': True, 'color': '#d9e6ff'},
+    'copyLabel': {'on': True, 'orig': 'ORIGINAL', 'copy': 'CARBON COPY'},
     'numberStart': 1,
     'numberDigits': 4,
     'numberColor': '#ff0000',
@@ -62,6 +63,9 @@ def merged(saved):
         if isinstance(m.get('carbon'), dict):
             for k, v in DEFAULTS['carbon'].items():
                 m['carbon'].setdefault(k, v)
+        if isinstance(m.get('copyLabel'), dict):
+            for k, v in DEFAULTS['copyLabel'].items():
+                m['copyLabel'].setdefault(k, v)
     return m
 
 
@@ -170,7 +174,7 @@ def draw_cover_slip(c, m, w, last):
         y -= 24
 
 
-def draw_slip(c, m, x0, w, number):
+def draw_slip(c, m, x0, w, number, label=''):
     ink = HexColor(m['inkColor'])
     c.setFillColor(ink)
     c.setStrokeColor(ink)
@@ -186,6 +190,12 @@ def draw_slip(c, m, x0, w, number):
     y -= 4
     c.setFont('Times-Bold', 13.5)
     c.setFillColor(HexColor(m['numberColor']))
+    if label:
+        # original / carbon-copy label, on the same line, left of the number
+        nw = c.stringWidth(number, 'Times-Bold', 13.5)
+        c.setFont('Times-Bold', 8)
+        c.drawRightString(x0 + w - 13 - nw - 8, y, label)
+        c.setFont('Times-Bold', 13.5)
     c.drawRightString(x0 + w - 13, y, number)
     c.setFillColor(ink)
     y -= 16
@@ -320,8 +330,13 @@ def generate(model):
             c.setFillColor(HexColor(m['carbon']['color']))
             c.rect(0, 0, PAGE_W, PAGE_H, stroke=0, fill=1)
             c.setFillColor(black)
+        is_copy = m['numberMode'] == 'copy' and idx % 2 == 1
+        cl = m.get('copyLabel') or {}
+        label = ''
+        if m['numberMode'] == 'copy' and cl.get('on'):
+            label = cl.get('copy', '') if is_copy else cl.get('orig', '')
         for s, num in enumerate(nums):
-            draw_slip(c, m, s * w, w, pad(m, num))
+            draw_slip(c, m, s * w, w, pad(m, num), label)
         draw_cut_lines(c, m)
         c.showPage()
 
