@@ -18,6 +18,7 @@
     fields: ['Name:', 'Grade:', 'Date:', 'Amount in words:'],
     numberMode: 'copy',          /* 'copy' = original + carbon copy sheet pairs; 'triplicate' */
     carbon: { enabled: true, color: '#d9e6ff' },
+    copyLabel: { on: true, orig: 'ORIGINAL', copy: 'CARBON COPY' },
     numberStart: 1,
     numberDigits: 4,
     numberColor: '#ff0000',
@@ -201,7 +202,7 @@
   }
 
   /* ---------- receipt slip ---------- */
-  function buildSlip(number) {
+  function buildSlip(number, label) {
     var slip = document.createElement('div');
     slip.className = 'slip';
 
@@ -212,10 +213,19 @@
     var addr = document.createElement('p');
     addr.className = 'addr';
     addr.innerHTML = model.address.map(esc).join('<br>');
-    var no = document.createElement('div');
+    var noRow = document.createElement('div');
+    noRow.className = 'rcpt-no-row';
+    if (label) {
+      var cl = document.createElement('span');
+      cl.className = 'rcpt-copylabel';
+      cl.textContent = label;
+      noRow.appendChild(cl);
+    }
+    var no = document.createElement('span');
     no.className = 'rcpt-no';
     no.textContent = number;
-    head.append(h1, addr, no);
+    noRow.appendChild(no);
+    head.append(h1, addr, noRow);
 
     var fields = document.createElement('div');
     fields.className = 'fields';
@@ -334,7 +344,11 @@
       sheet.style.fontFamily = model.fontFamily;
       sheet.style.setProperty('--ink', model.inkColor);
       sheet.style.setProperty('--num-color', model.numberColor);
-      nums.forEach(function (n) { sheet.appendChild(buildSlip(padNum(n))); });
+      var isCopySheet = model.numberMode === 'copy' && i % 2 === 1;
+      var label = (model.numberMode === 'copy' && model.copyLabel && model.copyLabel.on)
+        ? (isCopySheet ? model.copyLabel.copy : model.copyLabel.orig)
+        : '';
+      nums.forEach(function (n) { sheet.appendChild(buildSlip(padNum(n), label)); });
       if (model.numberMode === 'copy' && i % 2 === 1 && model.carbon.enabled) {
         sheet.style.background = model.carbon.color;   /* carbon copy sheet */
       }
@@ -387,6 +401,9 @@
     $('numberColor').value = model.numberColor;
     $('carbonEnabled').checked = model.carbon.enabled;
     $('carbonColor').value = model.carbon.color;
+    $('copyLabelOn').checked = model.copyLabel.on;
+    $('origLabel').value = model.copyLabel.orig;
+    $('copyLabelText').value = model.copyLabel.copy;
     $('cutEnabled').checked = model.cut.enabled;
     $('cutStyle').value = model.cut.style;
     $('cutColor').value = model.cut.color;
@@ -429,6 +446,8 @@
     fontFamily: function (v) { model.fontFamily = v; },
     numberColor: function (v) { model.numberColor = v; },
     carbonColor: function (v) { model.carbon.color = v; },
+    origLabel: function (v) { model.copyLabel.orig = v; },
+    copyLabelText: function (v) { model.copyLabel.copy = v; },
     inkColor: function (v) { model.inkColor = v; },
     numberMode: function (v) { model.numberMode = v === 'triplicate' ? 'triplicate' : 'copy'; },
     paperSize: function (v) { model.paper = v === 'a4' ? 'a4' : 'letter'; },
@@ -458,7 +477,8 @@
     cutVertical: function (v) { model.cut.vertical = v; },
     cutOuter: function (v) { model.cut.outer = v; },
     cutHorizontal: function (v) { model.cut.horizontal = v; },
-    carbonEnabled: function (v) { model.carbon.enabled = v; }
+    carbonEnabled: function (v) { model.carbon.enabled = v; },
+    copyLabelOn: function (v) { model.copyLabel.on = v; }
   };
   Object.keys(BOOLS).forEach(function (id) {
     $(id).addEventListener('input', function (e) { BOOLS[id](e.target.checked); changed(); });
