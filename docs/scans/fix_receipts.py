@@ -4,12 +4,15 @@
 - drop trailing blank page 11
 Everything else preserved as-is.
 """
+import os
+
 import pymupdf
 
-SRC = 'uploads/jkpp.pdf'
-OUT = 'jkpp_fixed.pdf'
-F3 = 'work/fonts/f27.ttf'   # Times New Roman Bold  (red numbers)
-F4 = 'work/fonts/f35.ttf'   # Times New Roman Regular (table headers)
+HERE = os.path.dirname(os.path.abspath(__file__))
+SRC = os.path.join(HERE, 'jkpp.pdf')
+OUT = os.path.join(HERE, 'jkpp_fixed.pdf')
+F3 = os.path.join(HERE, 'f27.ttf')   # Times New Roman Bold  (red numbers)
+F4 = os.path.join(HERE, 'f35.ttf')   # Times New Roman Regular (table headers)
 
 d = pymupdf.open(SRC)
 f3 = pymupdf.Font(fontfile=F3)
