@@ -10,7 +10,6 @@ vendor/
 .venv/
 __pycache__/
 *.pyc
-receipts-app/model.json
 
 # Node
 node_modules/

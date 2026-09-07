@@ -3,10 +3,11 @@
 NOTE: the generator now lives inside index.html (open it with index.html?builder=1 or
 index.html?template=simple|itemized|fees|wide), and receipt_book.html is a redirect to it.
 Re-running this script would overwrite that redirect — update index.html instead."""
-import base64, json, io
+import base64, json, io, os
 from PIL import Image
 
-LOGO = open('logo_b64.txt').read().strip()
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # repo root
+LOGO = open(os.path.join(ROOT, 'assets', 'logo_b64.txt')).read().strip()
 
 HTML = r'''<!DOCTYPE html>
 <html lang="en">
@@ -773,5 +774,5 @@ push(); bindAll(); render();
 '''
 
 HTML = HTML.replace("__LOGO__", LOGO)
-open('receipt_book.html', 'w').write(HTML)
+open(os.path.join(ROOT, 'receipt_book.html'), 'w').write(HTML)
 print("written", len(HTML))
