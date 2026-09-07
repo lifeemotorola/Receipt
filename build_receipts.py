@@ -2,18 +2,12 @@
 """
 Suahco4 — Receipt Book builder.
 
-Produces (into the docs/ folder of the repo):
-  docs/receipt_book.pdf   — print-ready, 2 receipts per A4 page (Original + Carbon Copy)
-  docs/receipt_book.docx  — same book, fully editable in Word
+Produces:
+  receipt_book.pdf   — print-ready, 2 receipts per A4 page (Original + Carbon Copy)
+  receipt_book.docx  — same book, fully editable in Word
 
-Edit the CONFIG block below to customise anything, then run:
-  python3 tools/build_receipts.py
+Edit the CONFIG block below to customise anything, then run:  python3 build_receipts.py
 """
-
-import os as _os
-_ROOT = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))
-DOCS  = _os.path.join(_ROOT, "docs")
-ASSETS = _os.path.join(_ROOT, "assets")
 
 # ============================== CONFIG ==============================
 CONFIG = {
@@ -887,13 +881,10 @@ def build(name, overrides=None):
     global C
     base = dict(CONFIG)
     base.update(overrides or {})
-    if base.get("logo") and not _os.path.isabs(base["logo"]):
-        base["logo"] = _os.path.join(ASSETS, base["logo"])
     C = base
-    _os.makedirs(DOCS, exist_ok=True)
-    build_pdf(_os.path.join(DOCS, f"{name}.pdf"))
-    build_docx(_os.path.join(DOCS, f"{name}.docx"))
-    return f"docs/{name}.pdf / docs/{name}.docx"
+    build_pdf(f"{name}.pdf")
+    build_docx(f"{name}.docx")
+    return f"{name}.pdf / {name}.docx"
 
 
 if __name__ == "__main__":

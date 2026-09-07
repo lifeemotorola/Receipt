@@ -9,7 +9,7 @@ Combine every receipt document in the project into ONE file:
                               into one .docx (each book keeps its own page
                               setup as a separate Word section).
 
-Run:  python3 tools/make_all_receipts_one.py
+Run:  python3 make_all_receipts_one.py
 """
 import copy
 import io
@@ -21,62 +21,62 @@ from reportlab.lib.units import mm
 from reportlab.pdfgen import canvas
 from reportlab.lib.utils import ImageReader
 
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # repo root
+ROOT = os.path.dirname(os.path.abspath(__file__))
 ACCENT = HexColor('#B8121B')
 INK = HexColor('#1f2937')
 MUTED = HexColor('#6b7280')
 
-OUT_PDF = os.path.join(ROOT, 'docs', 'receipts_all_in_one.pdf')
-OUT_DOCX = os.path.join(ROOT, 'docs', 'receipts_all_in_one.docx')
+OUT_PDF = os.path.join(ROOT, 'receipts_all_in_one.pdf')
+OUT_DOCX = os.path.join(ROOT, 'receipts_all_in_one.docx')
 
 # ---------------------------------------------------------------- PDF parts
 # kind: "pdf" -> insert the file's pages untouched
 #       "image" -> one page with the photo fitted + caption
 #       "none"  -> spacer book (kept for bookmarks/consistency)
 PARTS = [
-    dict(kind='pdf', file='docs/receipt_book.pdf', title='Simple Receipt Book',
-         src='docs/receipt_book.pdf + docs/receipt_book.docx',
+    dict(kind='pdf', file='receipt_book.pdf', title='Simple Receipt Book',
+         src='receipt_book.pdf + receipt_book.docx',
          desc='Blank-line receipt, 2 slips per A4 page - Original + Carbon Copy.',
          nums='Receipt No. SUAHCO4-061 - SUAHCO4-110 (50 receipts x 2 copies)'),
-    dict(kind='pdf', file='docs/receipt_book_itemized.pdf', title='Sales Receipt Book (Itemized)',
-         src='docs/receipt_book_itemized.pdf + docs/receipt_book_itemized.docx',
+    dict(kind='pdf', file='receipt_book_itemized.pdf', title='Sales Receipt Book (Itemized)',
+         src='receipt_book_itemized.pdf + receipt_book_itemized.docx',
          desc='Itemized table (Qty / Rate / Amount) with sub-total, discount, total.',
          nums='Receipt No. SUAHCO4-061 - SUAHCO4-110 (50 receipts x 2 copies)'),
-    dict(kind='pdf', file='docs/receipt_book_fees.pdf', title='School Fees Payment Slip Book',
-         src='docs/receipt_book_fees.pdf + docs/receipt_book_fees.docx',
+    dict(kind='pdf', file='receipt_book_fees.pdf', title='School Fees Payment Slip Book',
+         src='receipt_book_fees.pdf + receipt_book_fees.docx',
          desc='Fee breakdown: particulars / amount due / amount paid / balance.',
          nums='Receipt No. SUAHCO4-061 - SUAHCO4-110 (50 receipts x 2 copies)'),
-    dict(kind='pdf', file='docs/receipt_book_wide.pdf', title='Payment Receipt Book (Horizontal)',
-         src='docs/receipt_book_wide.pdf + docs/receipt_book_wide.docx',
+    dict(kind='pdf', file='receipt_book_wide.pdf', title='Payment Receipt Book (Horizontal)',
+         src='receipt_book_wide.pdf + receipt_book_wide.docx',
          desc='Horizontal A4-landscape receipt, 2 slips per page.',
          nums='Receipt No. SUAHCO4-061 - SUAHCO4-110 (50 receipts x 2 copies)'),
-    dict(kind='pdf', file='docs/scans/jkpp.pdf', title='Uploaded Receipt Book - Original Scan/PDF',
-         src='docs/scans/jkpp.pdf',
+    dict(kind='pdf', file='uploads/jkpp.pdf', title='Uploaded Receipt Book - Original Scan/PDF',
+         src='uploads/jkpp.pdf',
          desc='The scanned book exactly as it was uploaded (letter size).',
          nums='Receipts 0067 - 0081 as received (includes the trailing blank page)'),
-    dict(kind='pdf', file='docs/scans/jkpp_fixed.pdf', title='Uploaded Receipt Book - Corrected',
-         src='docs/scans/jkpp_fixed.pdf',
+    dict(kind='pdf', file='jkpp_fixed.pdf', title='Uploaded Receipt Book - Corrected',
+         src='jkpp_fixed.pdf',
          desc='Same book with clean triplicate numbering, one receipt per page x 3 slips.',
          nums='Receipts 0067 - 0076, 10 pages'),
-    dict(kind='pdf', file='docs/samples/export_default.pdf', title='Web App Export - Default Book',
-         src='docs/samples/export_default.pdf',
+    dict(kind='pdf', file='receipts-app/work/export_default.pdf', title='Web App Export - Default Book',
+         src='receipts-app/work/export_default.pdf',
          desc='Receipt Sheet Builder export with a full-page cover.',
          nums='Receipt Nos. 0001 - 0015 (originals + carbon copies)'),
-    dict(kind='pdf', file='docs/samples/export_slipcover.pdf', title='Web App Export - Slip-Cover Book',
-         src='docs/samples/export_slipcover.pdf',
+    dict(kind='pdf', file='receipts-app/work/export_slipcover.pdf', title='Web App Export - Slip-Cover Book',
+         src='receipts-app/work/export_slipcover.pdf',
          desc='Receipt Sheet Builder export with a receipt-piece cover.',
          nums='Receipt Nos. 0001 - 0015 (originals + carbon copies)'),
-    dict(kind='image', file='docs/scans/IMG_20260901_115539_678.jpg', title='Appendix - Source Photo',
-         src='docs/scans/IMG_20260901_115539_678.jpg',
+    dict(kind='image', file='uploads/IMG_20260901_115539_678.jpg', title='Appendix - Source Photo',
+         src='uploads/IMG_20260901_115539_678.jpg',
          desc='Photo of the printed receipt that the books are based on.',
          nums='Photographed 2026-09-01'),
 ]
 
 DOCX_FILES = [
-    ('docs/receipt_book.docx', 'Part 1 - Simple Receipt Book'),
-    ('docs/receipt_book_itemized.docx', 'Part 2 - Sales Receipt Book (Itemized)'),
-    ('docs/receipt_book_fees.docx', 'Part 3 - School Fees Payment Slip Book'),
-    ('docs/receipt_book_wide.docx', 'Part 4 - Payment Receipt Book (Horizontal)'),
+    ('receipt_book.docx', 'Part 1 - Simple Receipt Book'),
+    ('receipt_book_itemized.docx', 'Part 2 - Sales Receipt Book (Itemized)'),
+    ('receipt_book_fees.docx', 'Part 3 - School Fees Payment Slip Book'),
+    ('receipt_book_wide.docx', 'Part 4 - Payment Receipt Book (Horizontal)'),
 ]
 
 
@@ -218,7 +218,7 @@ def make_photo_pdf(pdf_w, pdf_h, path):
     c.setFont('Helvetica-Oblique', 8.5)
     c.setFillColor(MUTED)
     c.drawCentredString(pdf_w / 2, 8 * mm,
-                        'Source photo: docs/scans/IMG_20260901_115539_678.jpg  (printed receipt, photographed 2026-09-01)')
+                        'Source photo: uploads/IMG_20260901_115539_678.jpg  (printed receipt, photographed 2026-09-01)')
     c.showPage()
     c.save()
     return buf.getvalue()

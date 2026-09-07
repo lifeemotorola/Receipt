@@ -1,13 +1,8 @@
 #!/usr/bin/env python3
-"""Generate the Suahco4 wordmark logo (assets/logo.png) and its base64 data
-URI (assets/logo_b64.txt, inlined as DEFAULT_LOGO in index.html).
-Run once after changing branding:  python3 tools/make_logo.py"""
+"""Generate the Suahco4 wordmark logo (logo.png) and its base64 data URI
+(logo_b64.txt, used by receipt_book.html). Run once after changing branding."""
 import base64
 import io
-import os
-
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ASSETS = os.path.join(ROOT, "assets")
 from PIL import Image, ImageDraw, ImageFont
 
 NAVY = (20, 33, 61)      # #14213d
@@ -39,18 +34,15 @@ def build():
 
 def main():
     img = build()
-    os.makedirs(ASSETS, exist_ok=True)
-    png = os.path.join(ASSETS, "logo.png")
-    img.save(png)
+    img.save("logo.png")
 
     buf = io.BytesIO()
     img.save(buf, format="PNG")
     data = base64.b64encode(buf.getvalue()).decode("ascii")
-    b64 = os.path.join(ASSETS, "logo_b64.txt")
-    with open(b64, "w") as f:
+    with open("logo_b64.txt", "w") as f:
         f.write("data:image/png;base64," + data)
-    print("wrote %s (%dx%d) and %s (%d chars)"
-          % (png, img.size[0], img.size[1], b64, len(data)))
+    print("wrote logo.png (%dx%d) and logo_b64.txt (%d chars)"
+          % (img.size[0], img.size[1], len(data)))
 
 
 if __name__ == "__main__":

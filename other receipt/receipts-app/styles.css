@@ -1,0 +1,315 @@
+/* Receipt Sheet Builder — editor + printable US Letter landscape sheets */
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  color: #1e293b;
+}
+
+body { background: #eef0f4; }
+
+/* ---------- top toolbar ---------- */
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 20px;
+  background: #14213d;
+  color: #fff;
+  font-size: 14px;
+}
+.toolbar .brand { font-weight: 700; letter-spacing: .3px; }
+.actions { display: flex; gap: 10px; }
+.actions button {
+  padding: 6px 14px;
+  border: 0;
+  border-radius: 4px;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+#resetBtn, #toggleEditor { background: #33415580; color: #e2e8f0; border: 1px solid #64748b; }
+#resetBtn:hover, #toggleEditor:hover { background: #475569; }
+#printBtn { background: #fca311; color: #14213d; }
+#printBtn:hover { background: #ffb52e; }
+
+/* ---------- layout ---------- */
+#app { display: flex; align-items: stretch; min-height: calc(100vh - 45px); }
+
+#editor {
+  flex: 0 0 320px;
+  padding: 14px 16px 40px;
+  background: #f8fafc;
+  border-right: 1px solid #cbd5e1;
+  overflow-y: auto;
+  max-height: calc(100vh - 45px);
+  position: sticky;
+  top: 45px;
+  font-size: 13px;
+}
+body.editor-hidden #editor { display: none; }
+
+#editor section { margin-bottom: 20px; }
+#editor h2 {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .8px;
+  color: #14213d;
+  border-bottom: 2px solid #fca311;
+  padding-bottom: 4px;
+  margin: 0 0 10px;
+}
+#editor .stack { display: block; margin-bottom: 8px; }
+#editor .check { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
+#editor .check input { width: auto; margin: 0; }
+#editor input, #editor select {
+  width: 100%;
+  margin-top: 3px;
+  padding: 5px 7px;
+  border: 1px solid #94a3b8;
+  border-radius: 4px;
+  font: inherit;
+  background: #fff;
+}
+#editor input[type="color"] { padding: 2px; height: 32px; }
+#editor .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+#editor .listhead { font-weight: 600; margin: 8px 0 4px; }
+#editor .list .item { display: flex; gap: 6px; margin-bottom: 6px; }
+#editor .list .item input { margin-top: 0; }
+#editor .del {
+  flex: 0 0 26px;
+  border: 1px solid #b91c1c;
+  background: #fee2e2;
+  color: #b91c1c;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 700;
+}
+#editor .del:hover { background: #fecaca; }
+#editor .add {
+  border: 1px dashed #64748b;
+  background: transparent;
+  color: #334155;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+  font: inherit;
+}
+#editor .add:hover { background: #e2e8f0; }
+
+/* ---------- preview ---------- */
+#preview { flex: 1; overflow: auto; padding: 24px 12px 60px; }
+
+.sheet {
+  --ink: #000000;
+  --num-color: #ff0000;
+  position: relative;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+  width: 11in;
+  height: 8.5in;
+  margin: 0 auto 28px;
+  background: #fff;
+  color: var(--ink);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, .25);
+  display: flex;
+  overflow: hidden;
+  font-family: "Times New Roman", Times, serif;
+}
+
+/* ---------- cover page ---------- */
+.cover-sheet {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cover {
+  width: 82%;
+  border: 5px double var(--ink);
+  padding: .55in .6in;
+  text-align: center;
+}
+.cover .cov-school {
+  margin: 0;
+  font-size: 20pt;
+  font-weight: 700;
+  letter-spacing: .5pt;
+}
+.cover .addr { font-size: 12pt; margin-top: 4pt; }
+.cover .cov-title {
+  font-size: 27pt;
+  font-weight: 700;
+  letter-spacing: 3pt;
+  margin: .45in 0 .2in;
+}
+.cover .cov-range {
+  font-size: 14pt;
+  font-weight: 700;
+  color: var(--num-color);
+  margin-bottom: .35in;
+}
+.cover .cov-fields {
+  width: 85%;
+  margin: 0 auto;
+  text-align: left;
+}
+.cover .cov-fields .field { font-size: 12.5pt; margin: 12pt 0; }
+.cover .cov-fields .fill { height: 12.5pt; }
+
+/* receipt-piece cover (same size as one slip) */
+.cover-sheet.slip-cover { display: flex; }
+.slip-cover .cover {
+  width: 100%;
+  height: 100%;
+  border: 4px double var(--ink);
+  padding: .3in .22in;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.slip-cover .cov-school { font-size: 13.5pt; }
+.slip-cover .addr { font-size: 9.5pt; }
+.slip-cover .rcpt-no {
+  font-size: 13.5pt;
+  font-weight: 700;
+  color: var(--num-color);
+  text-align: right;
+  padding-right: .1in;
+  margin: 6pt 0 2pt;
+}
+.slip-cover .cov-title {
+  font-size: 16pt;
+  letter-spacing: 1.5pt;
+  margin: .2in 0 .15in;
+}
+.slip-cover .cov-range { font-size: 11pt; margin-bottom: .2in; }
+.slip-cover .cov-fields { width: 100%; }
+.slip-cover .cov-fields .field { font-size: 10.5pt; margin: 9pt 0; }
+.slip-cover .cov-fields .fill { height: 10.5pt; }
+
+/* ---------- cut lines ---------- */
+.cut {
+  position: absolute;
+  pointer-events: none;
+  z-index: 5;
+}
+.cut.v { top: 0; bottom: 0; }
+.cut.h { left: 0; right: 0; }
+
+/* ---------- one receipt slip ---------- */
+.slip {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: .55in .12in .2in .14in;
+  border-left: 1px solid var(--ink);
+  display: flex;
+  flex-direction: column;
+}
+.slip:first-child { border-left: 0; }
+.slip:last-child { border-right: 1px solid var(--ink); }
+
+.head h1 {
+  margin: 0;
+  font-size: 13.5pt;
+  font-weight: 700;
+  text-align: center;
+}
+.addr {
+  margin: 1pt 0 0;
+  font-size: 10.5pt;
+  line-height: 1.25;
+  text-align: center;
+}
+.rcpt-no {
+  margin: 2pt 0 4pt;
+  font-size: 13.5pt;
+  font-weight: 700;
+  color: var(--num-color);
+  text-align: right;
+  padding-right: .18in;
+}
+
+.fields { margin: 0 .06in; }
+.field {
+  display: flex;
+  align-items: flex-end;
+  gap: 4pt;
+  font-size: 10.5pt;
+  margin: 5.5pt 0;
+}
+.field .fill {
+  flex: 1;
+  border-bottom: 1px solid var(--ink);
+  height: 10.5pt;
+}
+
+.rule { border-top: 2.2px solid var(--ink); margin: 4pt .06in 8pt; }
+
+table {
+  width: calc(100% - .12in);
+  margin: 0 .06in;
+  border-collapse: collapse;
+  font-size: 12pt;
+}
+th, td { border: 1px solid var(--ink); }
+thead th {
+  font-weight: 400;
+  padding: 2pt 4pt;
+  line-height: 1.15;
+}
+tbody td {
+  height: 16.6pt;
+  padding: 0 4pt;
+  vertical-align: middle;
+}
+tbody td:first-child { padding-left: 5pt; }
+.c-no { width: 12%; }
+.c-desc { width: 39.5%; text-align: left; }
+.c-amt { width: 24%; }
+.c-rcpt { width: 24.5%; }
+sup { font-size: 70%; }
+
+.signed { margin: 10pt .06in 0; font-size: 12pt; }
+.sig-line {
+  display: inline-block;
+  width: 2.15in;
+  border-bottom: 1px solid var(--ink);
+  height: 9pt;
+  margin-left: 2pt;
+}
+.registrar { font-size: 12pt; text-align: center; margin: 1pt .3in 0; }
+
+/* ---------- print ---------- */
+@page { size: letter landscape; margin: 0; }
+
+@media print {
+  body {
+    background: #fff;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .cut {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .toolbar, #editor { display: none !important; }
+  #app { display: block; }
+  #preview { overflow: visible; padding: 0; }
+  #sheets { padding: 0; }
+  .sheet {
+    margin: 0;
+    box-shadow: none;
+    page-break-after: always;
+    break-after: page;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  .sheet:last-child { page-break-after: auto; break-after: auto; }
+}
